@@ -1,0 +1,55 @@
+httpClient:
+  socketTimeout: 15000
+  connectTimeout: 15000
+  maxConnPerRoute: 1024
+  maxConnTotal: 1024
+
+jms:
+  brokerUrl: vm://localhost:61616
+  username: admin
+  password: password
+  inputQueue: activemq://messages.in
+  outputQueue: activemq://messages.out
+
+server:
+ type: default
+ maxThreads: 1024
+ minThreads: 8
+ requestLog:
+  appenders: []
+ applicationConnectors:
+    - type: http
+      port: 9090
+ adminConnectors:
+    - type: http
+      port: 9091
+
+# Logging settings.
+logging:
+  level: INFO
+
+  loggers:
+    com.atlas.infrastructure: INFO
+  appenders:
+    - type: console
+
+    - type: file
+      threshold: INFO
+      currentLogFilename: logs/messages.log
+      archivedLogFilenamePattern: logs/messages-%d{yyyy-MM-dd}.log.gz
+      archivedFileCount: 5
+
+database:
+  driverClass: org.h2.Driver
+  user: test
+  password: test
+  url: jdbc:h2:mem:test
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 1s
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  minSize: 8
+  maxSize: 32
+  checkConnectionWhileIdle: false
+  evictionInterval: 10s
+  minIdleTime: 1 minute

@@ -1,0 +1,2 @@
+# Atlas jms
+Messaging setup
